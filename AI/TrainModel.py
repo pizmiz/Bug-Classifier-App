@@ -1,26 +1,24 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import tensorflow as tf
-import ManualLabel
 
-def ImportData():
-    PerfArr, FuncArr, SecurArr = ManualLabel.FilterResults()
-    return PerfArr, FuncArr, SecurArr
+from tensorflow.keras import layers
+from tensorflow.keras import losses
+from tensorflow.keras import preprocessing
 
 
 def FormatData():
-    PerfArr, FuncArr, SecurArr = ImportData()
+    
 
 
 
-
-    return PerfArr, FuncArr, SecurArr
+    return FuncArr
 
 
 
 
 def TrainModel():
-    FormatData()
+    FuncArrData = FormatData()
 
 
     
