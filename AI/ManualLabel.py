@@ -26,6 +26,8 @@ def FilterResults():
     SubStr4 = "Crash"
     SubStr5 = "Broken"
     SubStr6 = "doesn't work"
+    SubStr7 = "dont work"
+    SubStr8 = "don't work"
 
     for data in Titles:
         if type(data.value) is str:
@@ -40,6 +42,10 @@ def FilterResults():
             elif SubStr5 in data.value:
                 FuncArr.append(data.value)
             elif SubStr6 in data.value:
+                FuncArr.append(data.value)
+            elif SubStr7 in data.value:
+                FuncArr.append(data.value)
+            elif SubStr8 in data.value:
                 FuncArr.append(data.value)
             else:
                 NonFuncArr.append(data.value)
@@ -109,6 +115,7 @@ def WriteResults():
         i = i + 1
 
     i = 0
+    stopint = 0
     for x in NonFuncArr:
         StringChar = str(i)
         FileName = "NonFuncEx" + StringChar + ".txt"
@@ -116,6 +123,9 @@ def WriteResults():
         file1.write(x)
         file1.close()
         i = i + 1
+        stopint = stopint + 1
+        if (stopint == 20000):
+            break
 
 
 
