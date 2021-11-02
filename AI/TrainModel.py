@@ -35,16 +35,16 @@ def FormatData():
     )
     
 
-    def custom_standardization(input_data):
-        lowercase = tf.strings.lower(input_data)
-        returnstring = tf.strings.regex_replace(lowercase, '[%s]' % re.escape(string.punctuation), '')
-        return returnstring
+    #def custom_standardization(input_data):
+    #    lowercase = tf.strings.lower(input_data)
+    #    returnstring = tf.strings.regex_replace(lowercase, '[%s]' % re.escape(string.punctuation), '')
+    #    return returnstring
 
     max_features = 10000
     sequence_length = 250
 
     vectorize_layer = layers.TextVectorization(
-        standardize=custom_standardization,
+        standardize='lower_and_strip_punctuation',
         max_tokens=max_features,
         output_mode='int',
         output_sequence_length=sequence_length
@@ -61,7 +61,7 @@ def FormatData():
     #print (vectorize_layer.get_vocabulary()[144])
     
     train_ds = raw_train_ds.map(vectorize_text)
-    val_ds = raw_train_ds.map(vectorize_text)
+    val_ds = raw_val_ds.map(vectorize_text)
 
 
     return train_ds, val_ds, vectorize_layer
@@ -103,27 +103,28 @@ def TrainModel():
     )
 
     export_model = tf.keras.Sequential([
-    vectorize_layer,
-    model,
-    layers.Activation('sigmoid')
+        vectorize_layer,
+        model,
+        layers.Activation('sigmoid')
     ])
 
     export_model.compile(
         loss=losses.BinaryCrossentropy(from_logits=False), optimizer="adam", metrics=['accuracy']
-    )   
+    )
 
+    examples = [
+        'Who are we anymore',
+        'This is broken send help',
+        'Functional',
+        'This component is not working correctly',
+        'Test',
+        'This is a non functional component'
+    ]
 
-    #examples = [
-    #    "EXE is failing..",
-    #    "This component Wont Load!!!",
-    #    "This has nothing to do with anything",
-    #    "Today was a nice day"
-    #]
+    print (export_model.predict(examples))
 
-    #print (export_model.predict(examples))
+    print ("Saving Model...")   
 
-    print ("Saving Model...")
-    
     export_model.save('FuncModel')
 
     return
@@ -131,7 +132,21 @@ def TrainModel():
 
 
 if (__name__) == "__main__":
-    if (os.path.exists('//Data')):
+    DataPath = os.path.dirname(os.path.realpath(__file__)) + '\\Data'
+    if (os.path.exists(DataPath)):
         TrainModel()
     else:
         print ("Run ManualLabel.py First")
+
+    examples = [
+        'Who are we anymore',
+        'This is broken send help',
+        'Functional',
+        'This component is not working correctly',
+        'Test',
+        'This is a non functional component'
+    ]
+
+    export_model = tf.keras.models.load_model(os.getcwd() + '\\FuncModel')
+
+    print (export_model.predict(examples))
