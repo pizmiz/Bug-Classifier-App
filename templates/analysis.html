@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/analysis.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" type="image/x-icon">
         <title>
             Classifier App
@@ -11,24 +11,22 @@
     <body>
         <div class="Header">
             <h1>
-                Welcome to App Store Bug Classifier
+                Analysis Page
             </h1> 
         </div>
 
         <div class="Content">
-            <div class="FormHeader">
+            <div class="MyFormsHeader">
                 <p>
-                    Upload Zipped Bug Report Folder Here
+                    Analysis Page
                 </p>
             </div>
+
             <div class="MyForm">
-                <form action = "http://127.0.0.1:5000/uploader" method = "POST" enctype = "multipart/form-data">
-                    <input type = "file" name = "file" />
-                    <input type = "submit"/>
+                <form action = "http://127.0.0.1:5000" enctype = "multipart/form-data">
+                    <button type="submit">Return Home</button>
                 </form>  
             </div>   
-
-
         </div>
     </body>
 

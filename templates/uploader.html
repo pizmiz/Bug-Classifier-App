@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/uploader.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" type="image/x-icon">
+        <title>
+            Classifier App
+        </title>
+    </head>
+
+    <body>
+        <div class="Header">
+            <h1>
+                Uploader Page
+            </h1> 
+        </div>
+
+        <div class="Content">
+            <div class="MyFormsHeader">
+                <p>
+                    Uploaded File: {{content}}
+                </p>
+            </div>
+
+            <div class="MyForm1">
+                <form action = "http://127.0.0.1:5000/analysis" enctype = "multipart/form-data">
+                    <button type="submit">Preform Analysis</button>
+                </form>  
+            </div> 
+
+            <div class="MyForm2">
+                <form action = "http://127.0.0.1:5000" enctype = "multipart/form-data">
+                    <button type="submit">Return Home</button>
+                </form>  
+            </div>   
+        </div>
+    </body>
+
+
+</html>
