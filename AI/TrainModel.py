@@ -11,7 +11,7 @@ from tensorflow.keras import losses
 from tensorflow.keras import preprocessing
 
 
-def FormatData():
+def DoEverything():
     batch_size = 32
     seed = 42
 
@@ -63,15 +63,6 @@ def FormatData():
     train_ds = raw_train_ds.map(vectorize_text)
     val_ds = raw_val_ds.map(vectorize_text)
 
-
-    return train_ds, val_ds, vectorize_layer
-
-
-
-
-def TrainModel():
-    train_ds, val_ds, vectorize_layer = FormatData()
-
     AUTOTUNE = tf.data.AUTOTUNE
 
     train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
@@ -109,7 +100,7 @@ def TrainModel():
     ])
 
     export_model.compile(
-        loss=losses.BinaryCrossentropy(from_logits=False), optimizer="adam", metrics=['accuracy']
+        loss=losses.BinaryCrossentropy(from_logits=True), optimizer="adam", metrics=['accuracy']
     )
 
     examples = [
@@ -121,11 +112,17 @@ def TrainModel():
         'This is a non functional component'
     ]
 
-    print (export_model.predict(examples))
+    #print (model.predict(examples))
 
     print ("Saving Model...")   
 
-    export_model.save('FuncModel')
+    export_model.save('FuncModel\\FuncModel', save_format='tf')
+
+    #ModelDirectory = os.path.dirname(os.path.realpath(__file__)) + "\\FuncModel"
+
+    #model = tf.keras.models.load_model(ModelDirectory)
+
+    #print (model.predict(examples))
 
     return
 
@@ -134,19 +131,6 @@ def TrainModel():
 if (__name__) == "__main__":
     DataPath = os.path.dirname(os.path.realpath(__file__)) + '\\Data'
     if (os.path.exists(DataPath)):
-        TrainModel()
+        DoEverything()
     else:
         print ("Run ManualLabel.py First")
-
-    examples = [
-        'Who are we anymore',
-        'This is broken send help',
-        'Functional',
-        'This component is not working correctly',
-        'Test',
-        'This is a non functional component'
-    ]
-
-    export_model = tf.keras.models.load_model(os.getcwd() + '\\FuncModel')
-
-    print (export_model.predict(examples))

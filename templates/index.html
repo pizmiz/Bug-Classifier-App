@@ -8,13 +8,34 @@
         </title>
     </head>
 
-    <body>
+    <div class="Header">
         <h1>
             Welcome to App Store Bug Classifier
-        </h1>
-        {% for Names in content %}
-            <p>{{Names}}</p>
-        {% endfor %}
+        </h1> 
+    </div>
+
+    <body>
+        <div class="Header">
+            <h1>
+                Welcome to App Store Bug Classifier
+            </h1> 
+        </div>
+
+        <div class="Content">
+            <div class="FormHeader">
+                <p>
+                    Upload Bug Report Folder Here
+                </p>
+            </div>
+            <div class="MyForm">
+                <form action = "http://127.0.0.1:5000/uploader" method = "POST" enctype = "multipart/form-data">
+                    <input type = "file" name = "file" />
+                    <input type = "submit"/>
+                </form>  
+            </div>   
+
+
+        </div>
     </body>
 
 
