@@ -31,13 +31,6 @@ p {
   height: 20vh;
 }
 
-.MyForm1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-}
-
 .MyForm2 {
   display: flex;
   justify-content: center;
