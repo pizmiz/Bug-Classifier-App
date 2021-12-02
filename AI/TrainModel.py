@@ -1,14 +1,12 @@
+from tensorflow.python.ops.gen_batch_ops import batch
+from tensorflow.keras import preprocessing
+from tensorflow.keras import losses
+from tensorflow.keras import layers
+import tensorflow as tf
+import string
+import re
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-import re
-import string
-from tensorflow.python.ops.gen_batch_ops import batch 
-import tensorflow as tf
-
-from tensorflow.keras import layers
-from tensorflow.keras import losses
-from tensorflow.keras import preprocessing
 
 
 def DoEverything():
@@ -18,8 +16,8 @@ def DoEverything():
     raw_train_ds = preprocessing.text_dataset_from_directory(
         'Data',
         batch_size=batch_size,
-        validation_split = 0.2,
-        subset = 'training',
+        validation_split=0.2,
+        subset='training',
         seed=seed
     )
 
@@ -29,13 +27,12 @@ def DoEverything():
     raw_val_ds = preprocessing.text_dataset_from_directory(
         'Data',
         batch_size=batch_size,
-        validation_split = 0.2,
-        subset = 'validation',
+        validation_split=0.2,
+        subset='validation',
         seed=seed
     )
-    
 
-    #def custom_standardization(input_data):
+    # def custom_standardization(input_data):
     #    lowercase = tf.strings.lower(input_data)
     #    returnstring = tf.strings.regex_replace(lowercase, '[%s]' % re.escape(string.punctuation), '')
     #    return returnstring
@@ -59,7 +56,7 @@ def DoEverything():
 
     #print (vectorize_layer.get_vocabulary()[1000])
     #print (vectorize_layer.get_vocabulary()[144])
-    
+
     train_ds = raw_train_ds.map(vectorize_text)
     val_ds = raw_val_ds.map(vectorize_text)
 
@@ -82,9 +79,9 @@ def DoEverything():
     model.summary()
 
     model.compile(loss=losses.BinaryCrossentropy(from_logits=True),
-        optimizer='adam',
-        metrics=tf.metrics.BinaryAccuracy(threshold=0.0)
-    )
+                  optimizer='adam',
+                  metrics=tf.metrics.BinaryAccuracy(threshold=0.0)
+                  )
 
     epochs = 10
     history = model.fit(
@@ -92,6 +89,8 @@ def DoEverything():
         validation_data=val_ds,
         epochs=epochs
     )
+
+    loss, accuracy = model.evaluate(val_ds)
 
     export_model = tf.keras.Sequential([
         vectorize_layer,
@@ -114,7 +113,7 @@ def DoEverything():
 
     #print (model.predict(examples))
 
-    print ("Saving Model...")   
+    print("Saving Model...")
 
     export_model.save('FuncModel\\FuncModel', save_format='tf')
 
@@ -124,8 +123,10 @@ def DoEverything():
 
     #print (model.predict(examples))
 
-    return
+    print("Loss: ", loss)
+    print("Accuracy: ", accuracy)
 
+    return
 
 
 if (__name__) == "__main__":
@@ -133,4 +134,4 @@ if (__name__) == "__main__":
     if (os.path.exists(DataPath)):
         DoEverything()
     else:
-        print ("Run ManualLabel.py First")
+        print("Run ManualLabel.py First")

@@ -13,3 +13,10 @@ Milestone 1: Checked in basic file structure to run application, no functionalit
 Milestone 2: Added AI functionality, dataset and model. Working on fine tuning model to achieve goal.
 
 Milestone 3: Finished AI functionality, building UI and finishing project.
+
+# To Run:
+
+Make sure python installed and set in enviornment variables.
+
+1. Use Python to run Homepage.py
+2. Go to address listed: http://127.0.0.1:5000
