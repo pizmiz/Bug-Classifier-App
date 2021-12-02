@@ -14,9 +14,13 @@ Milestone 2: Added AI functionality, dataset and model. Working on fine tuning m
 
 Milestone 3: Finished AI functionality, building UI and finishing project.
 
-# To Run:
+# PreReqs:
 
-Make sure python installed and set in enviornment variables.
+1. Python Installed
+2. TensorFlow Installed using PiP
+3. Flask Installed using PiP
+
+# To Run:
 
 1. Use Python to run Homepage.py
 2. Go to address listed: http://127.0.0.1:5000
